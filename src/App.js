@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./components/Header.js";
 import Form from "./components/Form.js";
@@ -10,6 +10,11 @@ function App(props) {
   const [todos, setTodos] = useState(initialTodos);
   const [input, setInput] = useState("");
   const [editTodo, setEditTodo] = useState(null);
+  
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+  
   return (
     <div className="container">
       <div className="app-wrapper">
