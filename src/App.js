@@ -5,8 +5,11 @@ import Form from "./components/Form.js";
 import TodosList from "./components/TodosList.js";
 
 function App(props) {
-  const [todos, setTodos] = useState([]);
+
+  const initialTodos = JSON.parse(localStorage.getItem("todos")) || [];
+  const [todos, setTodos] = useState(initialTodos);
   const [input, setInput] = useState("");
+  const [editTodo, setEditTodo] = useState(null);
   return (
     <div className="container">
       <div className="app-wrapper">
@@ -19,10 +22,12 @@ function App(props) {
             setTodos={setTodos}
             input={input}
             setInput={setInput}
+            editTodo={editTodo}
+            setEditTodo={setEditTodo}
           />
         </div>
         <div>
-          <TodosList todos={todos} setTodos={setTodos} />
+          <TodosList todos={todos} setTodos={setTodos} setEditTodo={setEditTodo} />
         </div>
       </div>
     </div>
