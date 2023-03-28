@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import "./App.css";
-import Header from "./components/Header";
-import Form from "./components/Form";
-import TodosList from "./components/TodosList";
-import useLocalStorage from "./hooks/useLocalStorage";
+import React, { useState } from 'react';
+import './App.css';
+import Header from './components/Header';
+import Form from './components/Form';
+import TodosList from './components/TodosList';
+import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
-  const [todos, setTodos] = useLocalStorage("todos", []);
-  const [input, setInput] = useState("");
+  const [todos, setTodos] = useLocalStorage('todos', []);
+  const [input, setInput] = useState('');
   const [editTodo, setEditTodo] = useState(null);
 
   return (

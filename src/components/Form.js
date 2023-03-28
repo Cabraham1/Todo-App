@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 
-const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo }) => {
+const Form = ({
+  input, setInput, todos, setTodos, editTodo, setEditTodo,
+}) => {
   const updateTodo = (title, id, completed) => {
     const newTodo = todos.map((todo) => {
       if (todo.id === id) {
         return { title, id, completed };
-      } else {
-        return todo;
       }
+      return todo;
     });
     setTodos(newTodo);
     setEditTodo(null);
@@ -18,7 +20,7 @@ const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo }) => {
     if (editTodo) {
       setInput(editTodo.title);
     } else {
-      setInput("");
+      setInput('');
     }
   }, [editTodo, setInput]);
 
@@ -26,19 +28,19 @@ const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo }) => {
     setInput(e.target.value);
   };
 
-  const OnFormSubmit = (e) => {
+  const onFormSubmit = (e) => {
     e.preventDefault();
     if (!editTodo) {
       setTodos([...todos, { id: uuidv4(), title: input, completed: false }]);
-      setInput("");
+      setInput('');
     } else {
       updateTodo(input, editTodo.id, editTodo.completed);
-      setInput("");
+      setInput('');
     }
   };
 
   return (
-    <form onSubmit={OnFormSubmit}>
+    <form onSubmit={onFormSubmit}>
       <input
         type="text"
         className="task-input"
@@ -48,10 +50,33 @@ const Form = ({ input, setInput, todos, setTodos, editTodo, setEditTodo }) => {
         onChange={onInputChange}
       />
       <button type="submit" className="button-add">
-        {editTodo ? "Ok" : "Add"}
+        {editTodo ? 'Ok' : 'Add'}
       </button>
     </form>
   );
+};
+
+Form.propTypes = {
+  input: PropTypes.string.isRequired,
+  setInput: PropTypes.func.isRequired,
+  todos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
+    }),
+  ).isRequired,
+  setTodos: PropTypes.func.isRequired,
+  editTodo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+  }),
+  setEditTodo: PropTypes.func.isRequired,
+};
+
+Form.defaultProps = {
+  editTodo: null,
 };
 
 export default Form;
